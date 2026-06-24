@@ -224,10 +224,10 @@ def fetch_trials(query: str, max_results: int = 1000) -> pd.DataFrame:
 
     while len(records) < max_results:
         params = [
-            ("query.term",       query),
-            ("filter.studyType", "INTERVENTIONAL"),
-            ("pageSize",         page_size),
-            ("format",           "json"),
+            ("query.cond", query),
+            ("filter.advanced", "AREA[StudyType]INTERVENTIONAL"),
+            ("pageSize",   page_size),
+            ("format",     "json"),
         ]
         for f in fields:
             params.append(("fields", f))
@@ -304,12 +304,9 @@ def fetch_fda_approvals(sponsor_hint: str = "", limit: int = 99) -> pd.DataFrame
     """Pull recent drug approvals from openFDA Drugs@FDA endpoint."""
     try:
         params = {
-            "search":  "submissions.submissionType:NDA AND submissions.submissionStatusDate:[2010-01-01 TO 2025-12-31]",
-            "limit":   limit,
-            "sort":    "submissions.submissionStatusDate:desc",
+            "search": "submissions.submission_type:NDA+AND+submissions.submission_status:AP",
+            "limit":  limit,
         }
-        if sponsor_hint:
-            params["search"] += f" AND sponsorName:{sponsor_hint}"
 
         r = requests.get(FDA_BASE, params=params, timeout=15)
         r.raise_for_status()
@@ -324,7 +321,7 @@ def fetch_fda_approvals(sponsor_hint: str = "", limit: int = 99) -> pd.DataFrame
         app_no  = result.get("applicationNumber", "")
         for prod in result.get("products", []):
             for sub in result.get("submissions", []):
-                if sub.get("submissionType") in ("NDA", "BLA") and sub.get("submissionStatus") == "AP":
+                if sub.get("submission_type") in ("NDA", "BLA") and sub.get("submission_status") == "AP":
                     rows.append({
                         "application_number": app_no,
                         "sponsor":    sponsor,
@@ -332,8 +329,8 @@ def fetch_fda_approvals(sponsor_hint: str = "", limit: int = 99) -> pd.DataFrame
                         "generic_name": prod.get("activeIngredients", [{}])[0].get("name", "") if prod.get("activeIngredients") else "",
                         "dosage_form": prod.get("dosageForm", ""),
                         "route":       prod.get("route", ""),
-                        "approval_date": pd.to_datetime(sub.get("submissionStatusDate"), errors="coerce"),
-                        "submission_type": sub.get("submissionType"),
+                        "approval_date": pd.to_datetime(sub.get("submission_status_date"), errors="coerce"),
+                        "submission_type": sub.get("submission_type"),
                     })
 
     df = pd.DataFrame(rows).drop_duplicates(subset=["application_number", "brand_name"])
