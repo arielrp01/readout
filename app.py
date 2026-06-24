@@ -223,15 +223,14 @@ def fetch_trials(query: str, max_results: int = 1000) -> pd.DataFrame:
     page_size = min(100, max_results)
 
     while len(records) < max_results:
-        params = [
-            ("query.term", query),
-            ("pageSize",   page_size),
-            ("format",     "json"),
-        ]
-        for f in fields:
-            params.append(("fields", f))
+        params = {
+            "query.term": query,
+            "pageSize":   page_size,
+            "format":     "json",
+            "fields":     "|".join(fields),
+        }
         if token:
-            params.append(("pageToken", token))
+            params["pageToken"] = token
 
         try:
             r = requests.get(CT_BASE, params=params, timeout=15)
@@ -397,7 +396,7 @@ with st.sidebar:
     )
 
     st.markdown("---")
-    load_btn = st.button("▶ Run Analysis", use_container_width=True)
+    load_btn = st.button("Run Analysis", use_container_width=True)
     st.markdown(
         "<div style='font-size:0.65rem; color:#94a3b8; margin-top:1rem;'>"
         "Data: ClinicalTrials.gov API v2 + openFDA Drugs@FDA · Updates daily</div>",
@@ -444,7 +443,7 @@ df_raw = st.session_state.df_trials
 df_fda = st.session_state.df_fda
 
 if df_raw is None or df_raw.empty:
-    st.warning("No trial data loaded. Click **Run Analysis** to start.")
+    st.warning("No trial data loaded. Click **▶ Run Analysis** to start.")
     st.stop()
 
 # ── Apply sidebar filters ──────────────────────
