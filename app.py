@@ -353,8 +353,6 @@ def compute_pipeline_duration(df: pd.DataFrame) -> pd.DataFrame:
 # SIDEBAR
 # ─────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("### ⬡ Pipeline Intelligence", unsafe_allow_html=False)
-    st.markdown("---")
 
     area = st.selectbox(
         "Therapeutic Area",
