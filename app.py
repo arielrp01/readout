@@ -225,7 +225,6 @@ def fetch_trials(query: str, max_results: int = 1000) -> pd.DataFrame:
     while len(records) < max_results:
         params = [
             ("query.cond", query),
-            ("filter.advanced", "AREA[StudyType]INTERVENTIONAL"),
             ("pageSize",   page_size),
             ("format",     "json"),
         ]
@@ -245,6 +244,12 @@ def fetch_trials(query: str, max_results: int = 1000) -> pd.DataFrame:
         studies = data.get("studies", [])
         if not studies:
             break
+
+        # Filter to interventional studies in Python
+        studies = [s for s in studies
+                   if s.get("protocolSection", {})
+                     .get("designModule", {})
+                     .get("studyType") == "INTERVENTIONAL"]
 
         for s in studies:
             proto  = s.get("protocolSection", {})
@@ -304,8 +309,7 @@ def fetch_fda_approvals(sponsor_hint: str = "", limit: int = 99) -> pd.DataFrame
     """Pull recent drug approvals from openFDA Drugs@FDA endpoint."""
     try:
         params = {
-            "search": "submissions.submission_type:NDA+AND+submissions.submission_status:AP",
-            "limit":  limit,
+            "limit": limit,
         }
 
         r = requests.get(FDA_BASE, params=params, timeout=15)
@@ -321,7 +325,7 @@ def fetch_fda_approvals(sponsor_hint: str = "", limit: int = 99) -> pd.DataFrame
         app_no  = result.get("applicationNumber", "")
         for prod in result.get("products", []):
             for sub in result.get("submissions", []):
-                if sub.get("submission_type") in ("NDA", "BLA") and sub.get("submission_status") == "AP":
+                if sub.get("submissionType") in ("NDA", "BLA") and sub.get("submissionStatus") == "AP":
                     rows.append({
                         "application_number": app_no,
                         "sponsor":    sponsor,
@@ -329,8 +333,8 @@ def fetch_fda_approvals(sponsor_hint: str = "", limit: int = 99) -> pd.DataFrame
                         "generic_name": prod.get("activeIngredients", [{}])[0].get("name", "") if prod.get("activeIngredients") else "",
                         "dosage_form": prod.get("dosageForm", ""),
                         "route":       prod.get("route", ""),
-                        "approval_date": pd.to_datetime(sub.get("submission_status_date"), errors="coerce"),
-                        "submission_type": sub.get("submission_type"),
+                        "approval_date": pd.to_datetime(sub.get("submissionStatusDate"), errors="coerce"),
+                        "submission_type": sub.get("submissionType"),
                     })
 
     df = pd.DataFrame(rows).drop_duplicates(subset=["application_number", "brand_name"])
@@ -352,7 +356,7 @@ def compute_pipeline_duration(df: pd.DataFrame) -> pd.DataFrame:
 # SIDEBAR
 # ─────────────────────────────────────────────
 with st.sidebar:
-
+    
     area = st.selectbox(
         "Therapeutic Area",
         list(THERAPEUTIC_AREAS.keys()),
