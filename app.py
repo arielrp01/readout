@@ -853,8 +853,8 @@ st.markdown("---")
 st.markdown(
     "<div style='font-size:0.7rem; color:#9ca3af; text-align:center;'>"
     "Data sourced from <a href='https://clinicaltrials.gov' style='color:#6b7280;'>ClinicalTrials.gov</a> "
-    "and <a href='https://open.fda.gov' style='color:#6b7280;'>openFDA</a>. "
-    "Not for clinical decision-making. · Built with Streamlit + Plotly"
+    "and <a href='https://open.fda.gov' style='color:#6b7280;'>openFDA</a> "
+    "· Not for clinical decision-making. · Built with Streamlit + Plotly"
     "</div>",
     unsafe_allow_html=True
 )
