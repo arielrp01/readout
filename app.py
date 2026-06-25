@@ -728,7 +728,7 @@ if df_fda is not None and not df_fda.empty:
             color="Approvals",
             color_continuous_scale=["#99f6e4", "#0d9488"],
             labels={"approval_year": "Year"},
-            height=220,
+            height=320,
         )
         fig_appr.update_traces(
             hovertemplate="<b>%{x}</b><br>%{y} approvals<extra></extra>"
@@ -738,11 +738,7 @@ if df_fda is not None and not df_fda.empty:
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             coloraxis_showscale=False,
-            xaxis=dict(
-                gridcolor="#e5e7eb",
-                rangeslider=dict(visible=True, thickness=0.06),
-                type="linear",
-            ),
+            xaxis=dict(gridcolor="#e5e7eb", dtick=2),
             yaxis=dict(gridcolor="#e5e7eb"),
             font=dict(family="Inter", size=11),
             title=dict(text="NDA/BLA Approvals per Year", font=dict(size=11), x=0),
@@ -759,7 +755,7 @@ if df_fda is not None and not df_fda.empty:
             orientation="h",
             color="Approvals",
             color_continuous_scale=["#99f6e4", "#0d9488"],
-            height=220,
+            height=320,
             custom_data=["Sponsor"],
         )
         fig_fda_s.update_traces(
@@ -771,7 +767,7 @@ if df_fda is not None and not df_fda.empty:
             plot_bgcolor="rgba(0,0,0,0)",
             coloraxis_showscale=False,
             xaxis=dict(gridcolor="#e5e7eb"),
-            yaxis=dict(gridcolor="rgba(0,0,0,0)", title=None),
+            yaxis=dict(gridcolor="rgba(0,0,0,0)", title=None, tickmode="linear", automargin=True),
             font=dict(family="Inter", size=10),
             title=dict(text="Top NDA/BLA Sponsors (2010–2025)", font=dict(size=11), x=0),
         )
