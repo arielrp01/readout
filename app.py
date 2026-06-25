@@ -633,8 +633,7 @@ with col3:
             st.caption(
                 f"Showing {n_with_dates} of {n_total} filtered trials with parseable start dates. "
                 "Date completeness in ClinicalTrials.gov varies by therapeutic area. "
-                "Oncology and Rare Disease tend to be most complete. "
-                "Cardiovascular and Metabolic less so."
+                "This affects the Activity chart."
             )
 
 with col4:
