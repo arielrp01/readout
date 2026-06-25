@@ -625,11 +625,11 @@ with col4:
     fig_sponsors = px.bar(
         top_sponsors_sorted, x="Trials", y="Short",
         orientation="h",
-        color="Trials",
-        color_continuous_scale=["#99f6e4", "#0d9488"],
         height=280,
         custom_data=["Sponsor"],
     )
+    fig_sponsors.update_traces(marker_color="#14b8a6")
+    
     fig_sponsors.update_traces(
         hovertemplate="<b>%{customdata[0]}</b><br>%{x} trials<extra></extra>"
     )
