@@ -2,7 +2,7 @@
 Pharma Pipeline Intelligence
 ----------------------------
 Traces the drug development pipeline from clinical trial to FDA approval.
-Data sources: ClinicalTrials.gov API v2 + openFDA Drugs@FDA API
+Data sources: ClinicalTrials.gov API v2 + openFDA Drugs API 
 """
 
 import streamlit as st
@@ -417,12 +417,6 @@ with st.sidebar:
     if st.button("Clear Cache", use_container_width=True, type="secondary"):
         st.cache_data.clear()
         st.rerun()
-    st.markdown(
-        "<div style='font-size:0.65rem; color:#94a3b8; margin-top:1rem;'>"
-        "Data: ClinicalTrials.gov API v2 + openFDA Drugs@FDA · Updates daily</div>",
-        unsafe_allow_html=True
-    )
-
 
 # ─────────────────────────────────────────────
 # HEADER
@@ -430,7 +424,7 @@ with st.sidebar:
 st.markdown("""
 <div class='app-header'>
   <h1>Pharma Pipeline Intelligence</h1>
-  <p>Trial activity → FDA approval · ClinicalTrials.gov &amp; openFDA · Live data</p>
+  <p>Trial activity to FDA approval · ClinicalTrials.gov &amp; openFDA Drugs · Live Data - Updates daily</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -859,7 +853,7 @@ st.markdown("---")
 st.markdown(
     "<div style='font-size:0.7rem; color:#9ca3af; text-align:center;'>"
     "Data sourced from <a href='https://clinicaltrials.gov' style='color:#6b7280;'>ClinicalTrials.gov</a> "
-    "and <a href='https://open.fda.gov' style='color:#6b7280;'>openFDA</a> (public domain). "
+    "and <a href='https://open.fda.gov' style='color:#6b7280;'>openFDA</a>. "
     "Not for clinical decision-making. · Built with Streamlit + Plotly"
     "</div>",
     unsafe_allow_html=True
