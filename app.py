@@ -553,11 +553,17 @@ with col2:
         hole=0.55,
         height=280,
     )
-    fig_status.update_traces(textposition="outside", textinfo="percent+label", showlegend=False)
+    fig_status.update_traces(textposition="inside", textinfo="percent", showlegend=True)
     fig_status.update_layout(
-        margin=dict(l=0, r=0, t=10, b=10),
+        margin=dict(l=0, r=0, t=10, b=30),
         paper_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Inter", size=10),
+        legend=dict(
+            orientation="v",
+            x=1.02,
+            y=0.5,
+            font=dict(size=9),
+        ),
     )
     st.plotly_chart(fig_status, use_container_width=True)
 
