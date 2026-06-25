@@ -450,14 +450,12 @@ if df_raw is None or df_raw.empty:
 
 # ── Apply sidebar filters ──────────────────────
 df = df_raw.copy()
-if sel_phases:
-    df = df[df["phase"].isin(sel_phases)]
-if sponsor_types:
-    df = df[df["sponsor_class"].isin(sponsor_types)]
+df = df[df["phase"].isin(sel_phases)]            # empty selection → empty df, correctly
+df = df[df["sponsor_class"].isin(sponsor_types)] # same
 df = df[df["year_started"].between(year_min, year_max) | df["year_started"].isna()]
 
 if df.empty:
-    st.warning("No trials match current filters. Try widening your phase or year selection.")
+    st.warning("No trials match current filters. Try widening your phase, sponsor, or year selection.")
     st.stop()
 
 
