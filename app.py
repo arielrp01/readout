@@ -1,5 +1,5 @@
 """
-Pharma Drug Development Pipeline
+Readout | Drug Development Intelligence
 ----------------------------
 Traces the drug development pipeline from clinical trial to FDA approval.
 Data sources: ClinicalTrials.gov API v2 + openFDA Drugs@FDA API
@@ -18,7 +18,7 @@ import time
 # PAGE CONFIG
 # ─────────────────────────────────────────────
 st.set_page_config(
-    page_title="Pharma Drug Development Pipeline",
+    page_title="Readout",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -423,7 +423,7 @@ with st.sidebar:
 # ─────────────────────────────────────────────
 st.markdown("""
 <div class='app-header'>
-  <h1>Pharma Drug Development Pipeline</h1>
+  <h1>Readout | Drug Development Intelligence</h1>
   <p>Trial activity to FDA approval · ClinicalTrials.gov &amp; openFDA · Live Data</p>
 </div>
 """, unsafe_allow_html=True)
