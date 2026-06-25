@@ -529,6 +529,9 @@ with col1:
         labels={"Trials": "Number of Trials"},
         height=280,
     )
+    fig_phase.update_traces(
+        hovertemplate="<b>%{y}</b><br>%{x} trials<extra></extra>"
+    )
     fig_phase.update_layout(
         margin=dict(l=0, r=20, t=10, b=10),
         paper_bgcolor="rgba(0,0,0,0)",
@@ -594,6 +597,9 @@ with col3:
             labels={"year_started": "Year", "count": "New Trials", "phase_label": "Phase"},
             height=280,
         )
+        fig_time.update_traces(
+            hovertemplate="<b>%{fullData.name}</b><br>%{x}: %{y} new trials<extra></extra>"
+        )
         fig_time.update_layout(
             margin=dict(l=0, r=0, t=10, b=10),
             paper_bgcolor="rgba(0,0,0,0)",
@@ -616,6 +622,10 @@ with col4:
         color="Trials",
         color_continuous_scale=["#99f6e4", "#0d9488"],
         height=280,
+    )
+    fig_sponsors.update_traces(
+        customdata=top_sponsors[["Sponsor"]].values,
+        hovertemplate="<b>%{customdata[0]}</b><br>%{x} trials<extra></extra>"
     )
     fig_sponsors.update_layout(
         margin=dict(l=0, r=20, t=10, b=10),
@@ -644,6 +654,9 @@ if not df_dur.empty:
         labels={"duration_months": "Duration (months)", "phase_label": "Phase"},
         height=260,
         category_orders={"phase_label": ["Phase 2", "Phase 2/3", "Phase 3"]},
+    )
+    fig_dur.update_traces(
+        hovertemplate="<b>%{x}</b><br>Duration: %{y} months<extra></extra>"
     )
     fig_dur.update_layout(
         margin=dict(l=0, r=0, t=10, b=10),
@@ -689,6 +702,9 @@ if df_fda is not None and not df_fda.empty:
             labels={"approval_year": "Year"},
             height=220,
         )
+        fig_appr.update_traces(
+            hovertemplate="<b>%{x}</b><br>%{y} approvals<extra></extra>"
+        )
         fig_appr.update_layout(
             margin=dict(l=0, r=0, t=10, b=10),
             paper_bgcolor="rgba(0,0,0,0)",
@@ -711,6 +727,10 @@ if df_fda is not None and not df_fda.empty:
             color="Approvals",
             color_continuous_scale=["#99f6e4", "#0d9488"],
             height=220,
+        )
+        fig_fda_s.update_traces(
+            customdata=top_fda_sponsors[["Sponsor"]].values,
+            hovertemplate="<b>%{customdata[0]}</b><br>%{x} approvals<extra></extra>"
         )
         fig_fda_s.update_layout(
             margin=dict(l=0, r=20, t=10, b=10),
