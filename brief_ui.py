@@ -91,8 +91,7 @@ def render_brief_section(df_filtered, filters: dict):
         """
         <p style="color:#64748b; font-size:0.82rem; line-height:1.55;
                   margin-top:-0.5rem; margin-bottom:1rem; max-width:680px;">
-            A plain-language competitive intelligence brief synthesized from the filtered dataset above.
-            Powered by Claude · Synthesis takes 5–10 seconds.
+            A competitive intelligence brief synthesized from the filtered dataset above, powered by Claude · Estimated delivery: 5–10 secs.
         </p>
         """,
         unsafe_allow_html=True,
@@ -226,8 +225,7 @@ def render_brief_section(df_filtered, filters: dict):
 
         st.markdown(
             f"<div style='{card_style} margin-bottom:0.75rem;'>"
-            f"Download the brief as a Markdown file (.md). Pastes cleanly into Notion, "
-            f"Google Docs, Slack, email, or any text editor."
+            f"Download the brief in Markdown (.md) format for use in Notion, Google Docs, Slack, email, or any text editor."
             f"</div>",
             unsafe_allow_html=True,
         )
